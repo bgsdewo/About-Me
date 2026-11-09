@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+/* ===== Token warna: ganti di sini untuk mengubah palet seluruh website ===== */
+:root {
+  --bg: #f6f7fb;
+  --fg: #0b1023;
+  --muted: #4b5470;
+  --card: rgb(255 255 255 / 0.6);
+  --border: rgb(15 23 42 / 0.1);
+  --violet: #7c3aed;
+  --cyan: #0891b2;
+  --pink: #db2777;
+}
+.dark {
+  --bg: #070b1a;
+  --fg: #e8ebf7;
+  --muted: #a3abc7;
+  --card: rgb(255 255 255 / 0.05);
+  --border: rgb(255 255 255 / 0.1);
+  --violet: #8b5cf6;
+  --cyan: #22d3ee;
+  --pink: #f472b6;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-space);
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+::selection { background: var(--violet); color: white; }
+
+@layer components {
+  .text-muted { color: var(--muted); }
+  .glass {
+    background: var(--card);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+  .text-gradient {
+    background: linear-gradient(90deg, var(--violet), var(--cyan), var(--pink));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  /* Tombol: tinggi min 44px agar nyaman disentuh */
+  .btn-primary {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 44px; padding: 0 1.4rem; border-radius: 9999px; font-weight: 600;
+    color: white; background: linear-gradient(90deg, var(--violet), var(--cyan));
+    box-shadow: 0 8px 30px -8px var(--violet);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 36px -8px var(--violet); }
+  .btn-ghost {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 44px; padding: 0 1.4rem; border-radius: 9999px; font-weight: 600;
+    border: 1px solid var(--border); background: var(--card); backdrop-filter: blur(14px);
+    transition: transform .2s, border-color .2s;
+  }
+  .btn-ghost:hover { transform: translateY(-2px); border-color: var(--cyan); }
+  .orb {
+    background: radial-gradient(circle at 30% 30%, var(--cyan), var(--violet) 55%, transparent 72%);
+    filter: blur(8px);
+    opacity: .8;
+  }
+}
+
+:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+/* Panel yang harus mudah dibaca (menu HP, dialog): hampir tidak transparan */
+.glass-strong {
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
